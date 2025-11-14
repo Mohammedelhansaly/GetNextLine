@@ -6,15 +6,15 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:05 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/12 20:00:09 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/12 21:43:15 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bouns.h"
 
-char *ft_free(char *buffer, char *buff)
+char	*ft_free(char *buffer, char *buff)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (!buffer)
 		return (ft_strdup(buff));
@@ -23,10 +23,10 @@ char *ft_free(char *buffer, char *buff)
 	return (tmp);
 }
 
-char *extract_line(char *buffer)
+char	*extract_line(char *buffer)
 {
-	int i;
-	char *line;
+	int		i;
+	char	*line;
 
 	i = 0;
 	if (!buffer[i])
@@ -47,11 +47,11 @@ char *extract_line(char *buffer)
 	return (line);
 }
 
-char *next_line(char *buffer)
+char	*next_line(char *buffer)
 {
-	int i;
-	int j;
-	char *next;
+	int		i;
+	int		j;
+	char	*next;
 
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -72,10 +72,10 @@ char *next_line(char *buffer)
 	return (next);
 }
 
-char *read_and_buffer(int fd, char *res)
+char	*read_and_buffer(int fd, char *res)
 {
-	char *buffer;
-	int read_byte;
+	char	*buffer;
+	int		read_byte;
 
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
@@ -92,16 +92,16 @@ char *read_and_buffer(int fd, char *res)
 		buffer[read_byte] = '\0';
 		res = ft_free(res, buffer);
 		if (ft_strchr(buffer, '\n'))
-			break;
+			break ;
 	}
 	free(buffer);
 	return (res);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *buffer[MAX_FD];
-	char *line;
+	static char	*buffer[MAX_FD];
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || MAX_FD <= fd)
 		return (NULL);

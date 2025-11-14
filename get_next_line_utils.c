@@ -6,59 +6,48 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:40:44 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/06 15:32:27 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/14 12:11:43 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void ft_bezro(void *s, size_t n)
+size_t	ft_strlen(const char *str)
 {
-	size_t	i;
-	char	*str;
+	int	i;
 
-	str = s;
 	i = 0;
-	while (i < n)
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	if (size != 0 && nmemb > SIZE_MAX / size)
+	{
+		return (NULL);
+	}
+	str = malloc(nmemb * size);
+	if (!str)
+		return (NULL);
+	while (i < nmemb * size)
 	{
 		str[i] = 0;
 		i++;
 	}
+	return (str);
 }
 
-void *ft_calloc(size_t nmemb, size_t size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *str;
-
-	if (size != 0 && nmemb > SIZE_MAX / size)
-	{
-		return NULL;
-	}
-	str = malloc(nmemb * size);
-	if (!str)
-	{
-		return NULL;
-	}
-	ft_bezro(str, (nmemb * size));
-	return str;
-}
-size_t ft_strlen(char const *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		i++;
-	}
-	return i;
-}
-
-char *ft_strjoin(char const *s1, char const *s2)
-{
-	char *new;
-	int i;
-	int j;
+	char	*new;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -82,7 +71,7 @@ char *ft_strjoin(char const *s1, char const *s2)
 	return (new);
 }
 
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	while ((char)c != *s)
 	{
@@ -93,33 +82,23 @@ char *ft_strchr(const char *s, int c)
 	return ((char *)s);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (!dest && !src)
-		return (NULL);
-	if (dest != src)
-	{
-		while (i < n)
-		{
-			((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-			i++;
-		}
-	}
-	return (dest);
-}
 char	*ft_strdup(const char *src)
 {
 	size_t	size;
+	size_t	i;
 	char	*dest;
 
+	if (!src)
+		return (NULL);
 	size = ft_strlen(src);
 	dest = (char *)malloc(size * sizeof(char) + 1);
 	if (dest == NULL)
 		return (0);
-	ft_memcpy(dest, src, size);
+	while (i < size)
+	{
+		dest[i] = src[i];
+		i++;
+	}
 	dest[size] = '\0';
 	return (dest);
 }

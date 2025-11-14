@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/14 12:09:07 by moel-han          #+#    #+#             */
+/*   Updated: 2025/11/14 12:10:10 by moel-han         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_free(char *buffer, char *buff)
@@ -80,7 +92,7 @@ char	*read_and_buffer(int fd, char *res)
 		buffer[read_byte] = '\0';
 		res = ft_free(res, buffer);
 		if (ft_strchr(buffer, '\n'))
-			break;
+			break ;
 	}
 	free(buffer);
 	return (res);
