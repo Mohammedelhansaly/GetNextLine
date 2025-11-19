@@ -6,11 +6,11 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:05 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/12 21:43:15 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/19 19:17:24 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bouns.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_free(char *buffer, char *buff)
 {

@@ -6,11 +6,11 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:40:44 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/14 12:07:14 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/19 19:17:10 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bouns.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {

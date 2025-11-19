@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:40:53 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/12 21:50:27 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/19 19:16:59 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <fcntl.h>
+
+# define BUFFER_SIZE 1024
 
 void	ft_bezro(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
