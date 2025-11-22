@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:05 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/19 19:17:24 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:30:51 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*read_and_buffer(int fd, char *res)
 	return (res);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
 	static char	*buffer[MAX_FD];
 	char		*line;
@@ -112,52 +112,3 @@ char	*get_next_line(int fd)
 	buffer[fd] = next_line(buffer[fd]);
 	return (line);
 }
-
-// int main(void)
-// {
-// 	int fd1;
-// 	int fd2;
-// 	int fd3;
-
-// 	char *line1;
-// 	char *line2;
-// 	char *line3;
-
-// 	fd1 = open("file1.txt", O_RDONLY);
-// 	fd2 = open("file2.txt", O_RDONLY);
-// 	fd3 = open("file3.txt", O_RDONLY);
-
-// 	if (fd1 == -1 || fd2 == -1 || fd1 == -1)
-// 	{
-// 		perror("Error opening file");
-// 		return (1);
-// 	}
-
-// 	line1 = get_next_line(fd1);
-// 	printf("Line1 fd  %s", line1);
-// 	free(line1);
-
-// 	line2 = get_next_line(fd2);
-// 	printf("\nLine2 fd  %s", line2);
-// 	free(line2);
-
-// 	line3 = get_next_line(fd3);
-// 	printf("\nLine3 fd  %s", line3);
-// 	free(line3);
-// 	printf("---------------------------------------\n");
-
-// 	line1 = get_next_line(fd1);
-// 	printf("Line1 fd  %s", line1);
-// 	free(line1);
-
-// 	line2 = get_next_line(fd2);
-// 	printf("\nLine2 fd  %s", line2);
-// 	free(line2);
-
-// 	line3 = get_next_line(fd3);
-// 	printf("\nLine3 fd  %s", line3);
-// 	free(line3);
-
-// 	close(fd1);
-// 	return (0);
-// }

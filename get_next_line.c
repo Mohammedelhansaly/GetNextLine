@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 12:09:07 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/14 12:10:10 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:24:02 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,24 +112,3 @@ char	*get_next_line(int fd)
 	buffer = next_line(buffer);
 	return (line);
 }
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	int		i = 1;
-
-// 	fd = open("file.txt", O_RDONLY | O_CREAT,0664);
-// 	if (fd == -1)
-// 	{
-// 		perror("Error opening file");
-// 		return (1);
-// 	}
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("Line %d: %s", i, line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
