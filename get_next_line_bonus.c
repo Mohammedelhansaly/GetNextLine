@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:05 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/22 12:30:51 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/24 11:07:03 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_free(char *buffer, char *buff)
 		return (ft_strdup(buff));
 	tmp = ft_strjoin(buffer, buff);
 	free(buffer);
+	if (!tmp)
+		return (NULL);
 	return (tmp);
 }
 
@@ -28,9 +30,9 @@ char	*extract_line(char *buffer)
 	int		i;
 	char	*line;
 
-	i = 0;
-	if (!buffer[i])
+	if (!buffer || !buffer[0])
 		return (NULL);
+	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	line = ft_calloc(i + 2, sizeof(char));
@@ -53,6 +55,8 @@ char	*next_line(char *buffer)
 	int		j;
 	char	*next;
 
+	if (!buffer)
+		return (NULL);
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
@@ -61,10 +65,10 @@ char	*next_line(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	next = ft_calloc(ft_strlen(buffer) - i, sizeof(char));
+	i++;
+	next = ft_calloc(ft_strlen(buffer) - i + 1, sizeof(char));
 	if (!next)
 		return (NULL);
-	i++;
 	j = 0;
 	while (buffer[i])
 		next[j++] = buffer[i++];
@@ -81,7 +85,7 @@ char	*read_and_buffer(int fd, char *res)
 	if (!buffer)
 		return (NULL);
 	read_byte = 1;
-	while (read_byte > 0)
+	while ((res == NULL || !ft_strchr(res, '\n')) && read_byte > 0)
 	{
 		read_byte = read(fd, buffer, BUFFER_SIZE);
 		if (read_byte == -1)
@@ -91,14 +95,17 @@ char	*read_and_buffer(int fd, char *res)
 		}
 		buffer[read_byte] = '\0';
 		res = ft_free(res, buffer);
-		if (ft_strchr(buffer, '\n'))
-			break ;
+		if (!res)
+		{
+			free(buffer);
+			return (NULL);
+		}
 	}
 	free(buffer);
 	return (res);
 }
 
-char	*get_next_line_bonus(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*buffer[MAX_FD];
 	char		*line;
