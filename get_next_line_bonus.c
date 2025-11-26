@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:14:05 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/24 11:07:03 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/26 18:04:40 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*extract_line(char *buffer)
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	line = ft_calloc(i + 2, sizeof(char));
+	line = malloc((i + 2) * sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -46,6 +46,7 @@ char	*extract_line(char *buffer)
 	}
 	if (buffer[i] == '\n')
 		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 
@@ -66,43 +67,47 @@ char	*next_line(char *buffer)
 		return (NULL);
 	}
 	i++;
-	next = ft_calloc(ft_strlen(buffer) - i + 1, sizeof(char));
+	next = malloc((ft_strlen(buffer) - i + 1) * sizeof(char));
 	if (!next)
 		return (NULL);
 	j = 0;
 	while (buffer[i])
 		next[j++] = buffer[i++];
 	free(buffer);
+	next[j] = '\0';
 	return (next);
 }
 
-char	*read_and_buffer(int fd, char *res)
+char    *read_and_buffer(int fd, char *res)
 {
-	char	*buffer;
-	int		read_byte;
+    char    *buffer;
+    int     read_byte;
 
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buffer)
-		return (NULL);
-	read_byte = 1;
-	while ((res == NULL || !ft_strchr(res, '\n')) && read_byte > 0)
-	{
-		read_byte = read(fd, buffer, BUFFER_SIZE);
-		if (read_byte == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		buffer[read_byte] = '\0';
-		res = ft_free(res, buffer);
-		if (!res)
-		{
-			free(buffer);
-			return (NULL);
-		}
-	}
-	free(buffer);
-	return (res);
+    buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+    if (!buffer)
+        return (NULL);
+
+    read_byte = 1;
+    while ((res == NULL || !ft_strchr(res, '\n')) && read_byte > 0)
+    {
+        read_byte = read(fd, buffer, BUFFER_SIZE);
+        if (read_byte == -1)
+        {
+            free(buffer);
+            return (NULL);
+        }
+        buffer[read_byte] = '\0';
+
+        res = ft_free(res, buffer);
+        if (!res)
+        {
+            free(buffer);
+            return (NULL);
+        }
+    }
+
+    free(buffer);
+    return (res);
 }
 
 char	*get_next_line(int fd)

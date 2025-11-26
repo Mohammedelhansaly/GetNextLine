@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:40:53 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/22 12:23:40 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:53:06 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@
 #  define BUFFER_SIZE 1024
 # endif 
 
-void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen(char const *str);
-char	*ft_strchr(const char *s, int c);
+char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *src);
 char	*get_next_line(int fd);

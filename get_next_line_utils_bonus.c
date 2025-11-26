@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:40:44 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/19 19:17:10 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:46:40 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,6 @@ size_t	ft_strlen(const char *str)
 	while (str[i] != '\0')
 		i++;
 	return (i);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	if (size != 0 && nmemb > SIZE_MAX / size)
-	{
-		return (NULL);
-	}
-	str = malloc(nmemb * size);
-	if (!str)
-		return (NULL);
-	while (i < nmemb * size)
-	{
-		str[i] = 0;
-		i++;
-	}
-	return (str);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -71,15 +50,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
-	while ((char)c != *s)
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	if (c == '\0')
+		return ((char *)&s[ft_strlen(s)]);
+	while (s[i] != '\0')
 	{
-		if (!*s)
-			return (0);
-		s++;
+		if (s[i] == (char) c)
+			return ((char *)&s[i]);
+		i++;
 	}
-	return ((char *)s);
+	return (0);
 }
 
 char	*ft_strdup(const char *src)
