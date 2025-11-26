@@ -6,7 +6,7 @@
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 12:09:07 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/26 18:02:08 by moel-han         ###   ########.fr       */
+/*   Updated: 2025/11/26 18:12:50 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,36 +78,33 @@ char	*next_line(char *buffer)
 	return (next);
 }
 
-char    *read_and_buffer(int fd, char *res)
+char	*read_and_buffer(int fd, char *res)
 {
-    char    *buffer;
-    int     read_byte;
+	char	*buffer;
+	int		read_byte;
 
-    buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-    if (!buffer)
-        return (NULL);
-
-    read_byte = 1;
-    while ((res == NULL || !ft_strchr(res, '\n')) && read_byte > 0)
-    {
-        read_byte = read(fd, buffer, BUFFER_SIZE);
-        if (read_byte == -1)
-        {
-            free(buffer);
-            return (NULL);
-        }
-        buffer[read_byte] = '\0';
-
-        res = ft_free(res, buffer);
-        if (!res)
-        {
-            free(buffer);
-            return (NULL);
-        }
-    }
-
-    free(buffer);
-    return (res);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	read_byte = 1;
+	while ((res == NULL || !ft_strchr(res, '\n')) && read_byte > 0)
+	{
+		read_byte = read(fd, buffer, BUFFER_SIZE);
+		if (read_byte == -1)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		buffer[read_byte] = '\0';
+		res = ft_free(res, buffer);
+		if (!res)
+		{
+			free(buffer);
+			return (NULL);
+		}
+	}
+	free(buffer);
+	return (res);
 }
 
 char	*get_next_line(int fd)
