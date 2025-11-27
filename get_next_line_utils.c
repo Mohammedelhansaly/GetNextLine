@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -25,8 +25,8 @@ size_t	ft_strlen(const char *str)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*new;
-	int		i;
-	int		j;
+	size_t		i;
+	size_t		j;
 
 	i = 0;
 	j = 0;
@@ -52,7 +52,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strchr(char *s, int c)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!s)

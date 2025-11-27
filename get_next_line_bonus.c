@@ -83,13 +83,13 @@ char	*read_and_buffer(int fd, char *res)
 	char	*buffer;
 	int		read_byte;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = malloc(((size_t)BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	read_byte = 1;
-	while ((res == NULL || !ft_strchr(res, '\n')) && read_byte > 0)
+	while ((!ft_strchr(res, '\n')) && read_byte > 0)
 	{
-		read_byte = read(fd, buffer, BUFFER_SIZE);
+		read_byte = read(fd, buffer, (size_t)BUFFER_SIZE);
 		if (read_byte == -1)
 		{
 			free(buffer);
