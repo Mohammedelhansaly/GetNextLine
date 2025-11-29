@@ -5,119 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-han <moel-han@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/14 12:09:07 by moel-han          #+#    #+#             */
-/*   Updated: 2025/11/26 18:12:50 by moel-han         ###   ########.fr       */
+/*   Created: 2025/11/22 09:44:28 by moel-han          #+#    #+#             */
+/*   Updated: 2025/11/28 15:44:18 by moel-han         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_free(char *buffer, char *buff)
+static char	*read_lines(int fd, char *str, char *buffer)
 {
-	char	*tmp;
+	ssize_t	b_read;
+	char	*temp;
 
-	if (!buffer)
-		return (ft_strdup(buff));
-	tmp = ft_strjoin(buffer, buff);
-	free(buffer);
-	if (!tmp)
+	b_read = read(fd, buffer, BUFFER_SIZE);
+	while (b_read > 0)
+	{
+		buffer[b_read] = '\0';
+		if (!str)
+			str = ft_strdup("");
+		temp = ft_strjoin(str, buffer);
+		free(str);
+		if (!temp)
+			return (NULL);
+		str = temp;
+		if (ft_strchr(str, '\n'))
+			break ;
+		b_read = read(fd, buffer, BUFFER_SIZE);
+	}
+	if (b_read < 0)
+	{
+		free(str);
+		str = NULL;
 		return (NULL);
-	return (tmp);
+	}
+	return (str);
 }
 
-char	*extract_line(char *buffer)
+static char	*remainder_lines(char *line)
 {
 	int		i;
-	char	*line;
+	char	*remainder;
 
-	if (!buffer || !buffer[0])
-		return (NULL);
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (line[i] != '\n' && line[i] != '\0')
 		i++;
-	line = malloc((i + 2) * sizeof(char));
-	if (!line)
+	if (line[i] == '\0')
 		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	remainder = ft_strdup(line + i + 1);
+	if (!remainder || *remainder == '\0')
 	{
-		line[i] = buffer[i];
-		i++;
+		free(remainder);
+		remainder = NULL;
 	}
-	if (buffer[i] == '\n')
-		line[i++] = '\n';
-	line[i] = '\0';
-	return (line);
-}
-
-char	*next_line(char *buffer)
-{
-	int		i;
-	int		j;
-	char	*next;
-
-	if (!buffer)
-		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	if (!buffer[i])
-	{
-		free(buffer);
-		return (NULL);
-	}
-	i++;
-	next = malloc((ft_strlen(buffer) - i + 1) * sizeof(char));
-	if (!next)
-		return (NULL);
-	j = 0;
-	while (buffer[i])
-		next[j++] = buffer[i++];
-	free(buffer);
-	next[j] = '\0';
-	return (next);
-}
-
-char	*read_and_buffer(int fd, char *res)
-{
-	char	*buffer;
-	int		read_byte;
-
-	buffer = malloc(((size_t)BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
-	read_byte = 1;
-	while (!ft_strchr(res, '\n') && read_byte > 0)
-	{
-		read_byte = read(fd, buffer, (size_t)BUFFER_SIZE);
-		if (read_byte == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		buffer[read_byte] = '\0';
-		res = ft_free(res, buffer);
-		if (!res)
-		{
-			free(buffer);
-			return (NULL);
-		}
-	}
-	free(buffer);
-	return (res);
+	line[i + 1] = '\0';
+	return (remainder);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*str;
+	char		*buffer;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		free(str);
+		str = NULL;
 		return (NULL);
-	buffer = read_and_buffer(fd, buffer);
+	}
+	buffer = (char *)malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	line = extract_line(buffer);
-	buffer = next_line(buffer);
+	line = read_lines(fd, str, buffer);
+	free(buffer);
+	if (!line)
+	{
+		free(str);
+		str = NULL;
+		return (NULL);
+	}
+	str = remainder_lines(line);
 	return (line);
 }
